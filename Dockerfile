@@ -3,7 +3,20 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
+RUN apt-get update
+RUN apt-get install -y curl
+RUN apt-get install -y libpng-dev libjpeg-dev curl libxi6 build-essential libgl1-mesa-glx
+RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash -
+RUN apt-get install -y nodejs
+
 FROM mcr.microsoft.com/dotnet/sdk:7.0-bullseye-slim-amd64 AS build
+
+RUN apt-get update
+RUN apt-get install -y curl
+RUN apt-get install -y libpng-dev libjpeg-dev curl libxi6 build-essential libgl1-mesa-glx
+RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash -
+RUN apt-get install -y nodejs
+
 WORKDIR /src
 COPY ["misono.io.csproj", "."]
 RUN dotnet restore "./misono.io.csproj"
